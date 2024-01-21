@@ -1,10 +1,5 @@
 # Azure example of flattening a map of maps into a list of maps
 # Azure-ized version of https://developer.hashicorp.com/terraform/language/functions/flatten
-
-provider "azurerm" {
-  features {}
-}
-
 variable "networks" {
   type = map(object({
     cidr_block = string
