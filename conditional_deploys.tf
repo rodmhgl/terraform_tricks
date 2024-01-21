@@ -1,31 +1,27 @@
 locals {
-  deploy_if_map_value_is_true = {
-    deploy_true = {
-      name    = "Deploy Me"
-      enabled = true
+  resource_groups = {
+    rg-app-dev-use = {
+      enabled  = true
+      location = "East US"
     }
-    deploy_false = {
-      name    = "Do Not Deploy Me"
-      enabled = false
+    rg-app-dev-usw3 = {
+      enabled  = false
+      location = "West US 3"
     }
   }
 }
 
-resource "null_resource" "deploy_if_map_value_is_true" {
-
+resource "azurerm_resource_group" "conditional_deploys" {
   for_each = {
-    for k, v in local.deploy_if_map_value_is_true :
+    for k, v in local.resource_groups :
     k => v if v.enabled == true
   }
 
-  triggers = {
-    always_run = "${timestamp()}"
-  }
+  location = each.value.location
+  name     = each.key
+  tags     = local.tags
+}
 
-  provisioner "local-exec" {
-    command = <<-EOT
-      echo -e "\n***Hello, ${each.value.name}!***\n"
-    EOT
-  }
-
+output "conditional_deploys_resource_groups" {
+  value = { for k, v in azurerm_resource_group.conditional_deploys : k => v }
 }

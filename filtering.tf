@@ -5,6 +5,7 @@ variable "users" {
   type = map(object({
     is_admin = bool
   }))
+  description = "A map of users."
   default = {
     "bob_user" = {
       is_admin = false
@@ -27,9 +28,11 @@ locals {
 }
 
 output "filtering_admin_users" {
-  value = { for k, v in local.admin_users : k => v }
+  description = "A map of admin users."
+  value       = { for k, v in local.admin_users : k => v }
 }
 
 output "filtering_regular_users" {
-  value = { for k, v in local.regular_users : k => v }
+  description = "A map of regular users."
+  value       = { for k, v in local.regular_users : k => v }
 }

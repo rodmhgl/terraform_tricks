@@ -42,7 +42,7 @@ locals {
           use_remote_gateways          = false
         }
       ]
-    ]) : "${peerconfig.name}" => peerconfig
+    ]) : peerconfig.name => peerconfig
   }
 }
 
