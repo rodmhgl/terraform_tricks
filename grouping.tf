@@ -33,7 +33,7 @@ locals {
   }
 
   # Without the `...` operator, this would fail due to the duplicate key "reader":
-  # Two different items produced the key "reader" in this 'for' expression.
+  # Error: Two different items produced the key "reader" in this 'for' expression.
   # ungrouped_users_by_role = {
   #   for name, user in var.grouped_users : user.role => name
   # }
