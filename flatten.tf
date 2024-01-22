@@ -153,6 +153,7 @@ resource "azurerm_network_security_group" "this" {
   tags                = local.tags
   dynamic "security_rule" {
     for_each = each.value.nsg_rules
+
     content {
       name                       = security_rule.key
       priority                   = security_rule.value.priority
@@ -164,6 +165,7 @@ resource "azurerm_network_security_group" "this" {
       source_address_prefix      = security_rule.value.source_address_prefix
       destination_address_prefix = security_rule.value.destination_address_prefix
     }
+
   }
 
 }
